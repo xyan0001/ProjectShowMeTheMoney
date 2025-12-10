@@ -94,7 +94,6 @@ Based on the following transaction history, predict the cash flow for the next {
         }
         catch (Exception ex)
         {
-            Console.WriteLine($"Error calling LLM: {ex}");
             return StatusCode(500, $"Error calling LLM: {ex.Message}");
         }
     }

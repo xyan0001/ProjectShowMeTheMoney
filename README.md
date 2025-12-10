@@ -39,16 +39,16 @@ The API will start at `http://localhost:5000`.
 - Swagger UI: `http://localhost:5000/swagger`
 - Transactions Endpoint: `http://localhost:5000/api/transactions`
 
-**Configuration (Optional):**
-To use real Azure OpenAI for predictions, update `backend/appsettings.Development.json` with your credentials:
+**Configuration:**
+To use real Azure OpenAI for predictions, configure your credentials using .NET User Secrets (recommended for security):
 
-```json
-"AzureOpenAI": {
-  "Endpoint": "https://YOUR_RESOURCE_NAME.openai.azure.com/",
-  "ApiKey": "YOUR_API_KEY",
-  "DeploymentName": "gpt-4o"
-}
+```bash
+dotnet user-secrets init
+dotnet user-secrets set "AzureOpenAI:Endpoint" "https://YOUR_RESOURCE_NAME.openai.azure.com/"
+dotnet user-secrets set "AzureOpenAI:ApiKey" "YOUR_API_KEY"
+dotnet user-secrets set "AzureOpenAI:DeploymentName" "YOUR_DEPLOYMENT_NAME"
 ```
+
 If not configured, the app will use a mock random-walk prediction algorithm.
 
 ### 3. Frontend (React)
