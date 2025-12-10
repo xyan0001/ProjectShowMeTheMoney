@@ -1,0 +1,51 @@
+# Visual Studio
+.vs/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# VS Code
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+*.code-workspace
+
+# .NET
+bin/
+obj/
+project.lock.json
+project.fragment.lock.json
+artifacts/
+var/
+
+# Node.js / Frontend
+node_modules/
+npm-debug.log
+yarn-error.log
+dist/
+build/
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+venv/
+.venv/
+env/
+.env/
+
+# OS generated files
+.DS_Store
+Thumbs.db
+
+# User Secrets (if not using the standard location)
+secrets.json
+appsettings.Development.json

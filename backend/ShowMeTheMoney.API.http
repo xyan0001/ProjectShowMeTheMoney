@@ -1,0 +1,6 @@
+@ShowMeTheMoney.API_HostAddress = http://localhost:5182
+
+GET {{ShowMeTheMoney.API_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

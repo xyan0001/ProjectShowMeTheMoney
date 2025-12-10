@@ -1,0 +1,30 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "build",
+            "command": "dotnet",
+            "type": "process",
+            "args": [
+                "build",
+                "${workspaceFolder}/backend/ShowMeTheMoney.API.csproj",
+                "/property:GenerateFullPaths=true",
+                "/consoleloggerparameters:NoSummary"
+            ],
+            "problemMatcher": "$msCompile"
+        },
+        {
+            "label": "npm: dev",
+            "type": "npm",
+            "script": "dev",
+            "path": "frontend",
+            "problemMatcher": [],
+            "isBackground": true,
+            "presentation": {
+                "group": "group",
+                "reveal": "never",
+                "panel": "dedicated"
+            }
+        }
+    ]
+}
