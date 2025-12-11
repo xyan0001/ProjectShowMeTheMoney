@@ -21,61 +21,77 @@ def generate_nz_bank_account():
 
 def generate_mock_data(num_transactions=200, end_date_str="2025-12-11"):
     end_date = datetime.strptime(end_date_str, "%Y-%m-%d")
-    # Estimate start date to fit transactions (avg 1.5 days per transaction)
-    start_date = end_date - timedelta(days=int(num_transactions * 1.5) + 30)
+    # Calculate start date based on desired density (e.g., ~1 transaction every 2 days)
+    # This ensures transactions are spread out over a realistic period
+    days_back = int(num_transactions * 2)
+    start_date = end_date - timedelta(days=days_back)
+    
+    # Generate random timestamps within the range and sort them
+    timestamps = []
+    total_seconds = int((end_date - start_date).total_seconds())
+    
+    for _ in range(num_transactions):
+        random_seconds = random.randint(0, total_seconds)
+        timestamps.append(start_date + timedelta(seconds=random_seconds))
+    
+    timestamps.sort()
     
     transactions = []
-    balance = 5000.00  # Starting balance
+    balance = 15000.00  # Starting balance for business
     
-    descriptions = [
-        "TRANSFER FROM JJXEDXX - 01",
-        "PAYMENT TO SUPPLIER ABC",
-        "DIRECT DEBIT UTILITY",
-        "POS PURCHASE OFFICE SUPPLIES",
-        "CREDIT INTEREST",
-        "TRANSFER TO SAVINGS",
-        "COUNTDOWN SUPERMARKET",
-        "NEW WORLD GROCERY",
-        "UBER TRIP",
-        "UBER EATS",
-        "NETFLIX SUBSCRIPTION",
-        "SPOTIFY PREMIUM",
-        "Z ENERGY PETROL",
-        "BP CONNECT",
-        "CAFE LUNCH",
-        "RESTAURANT DINNER",
-        "SALARY PAYMENT",
-        "RENT PAYMENT",
-        "POWER BILL",
-        "INTERNET BILL",
-        "MOBILE PLAN",
-        "GYM MEMBERSHIP",
-        "PHARMACY PURCHASE",
-        "HARDWARE STORE",
-        "ONLINE SHOPPING AMAZON",
-        "THE WAREHOUSE",
-        "KMART PURCHASE"
+    # Business related descriptions
+    income_descriptions = [
+        "INVOICE PAYMENT - CLIENT A",
+        "INVOICE PAYMENT - CLIENT B", 
+        "INVOICE PAYMENT - CLIENT C",
+        "STRIPE PAYOUT",
+        "SHOPIFY SETTLEMENT",
+        "GST REFUND",
+        "INTEREST RECEIVED"
     ]
 
-    current_date = start_date
+    expense_descriptions = [
+        "OFFICE RENT",
+        "XERO SUBSCRIPTION",
+        "AWS WEB SERVICES",
+        "OFFICE SUPPLIES - WAREHOUSE STATIONERY",
+        "BUSINESS INSURANCE",
+        "ACC LEVY",
+        "PAYE TAX PAYMENT",
+        "CONTRACTOR PAYMENT - DEV",
+        "CONTRACTOR PAYMENT - DESIGN",
+        "SOFTWARE LICENSE - ADOBE",
+        "SOFTWARE LICENSE - MICROSOFT",
+        "INTERNET - BUSINESS FIBRE",
+        "MOBILE - FLEET PLAN",
+        "TRAVEL EXPENSES - FLIGHTS",
+        "CLIENT LUNCH",
+        "COFFEE FOR OFFICE",
+        "CLEANING SERVICES",
+        "COURIER POST",
+        "PRINTING SERVICES",
+        "BANK FEES"
+    ]
 
     for i in range(num_transactions):
-        # Advance time randomly by 0-3 days
-        current_date += timedelta(days=random.randint(0, 3), hours=random.randint(0, 23))
+        current_date = timestamps[i]
         
-        # Ensure we don't go past the end date
-        if current_date > end_date:
-            current_date = end_date
-        
-        is_credit = random.choice([True, False])
-        # Make salary more likely to be credit and larger
-        if random.random() < 0.1:
-             description = "SALARY PAYMENT"
+        # 30% chance of income (invoices etc), 70% chance of expense
+        if random.random() < 0.3:
              is_credit = True
-             amount = round(random.uniform(2000.0, 4000.0), 2)
+             description = random.choice(income_descriptions)
+             # Income tends to be larger chunks
+             amount = round(random.uniform(500.0, 5000.0), 2)
         else:
-             description = random.choice([d for d in descriptions if d != "SALARY PAYMENT"])
-             amount = round(random.uniform(10.0, 300.0), 2)
+             is_credit = False
+             description = random.choice(expense_descriptions)
+             # Expenses vary widely
+             if "RENT" in description or "TAX" in description:
+                 amount = round(random.uniform(1000.0, 3000.0), 2)
+             elif "CONTRACTOR" in description:
+                 amount = round(random.uniform(500.0, 2000.0), 2)
+             else:
+                 amount = round(random.uniform(20.0, 500.0), 2)
         
         debit_amount = 0
         credit_amount = 0

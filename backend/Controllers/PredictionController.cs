@@ -71,6 +71,7 @@ Based on the following transaction history, predict the cash flow for the next {
 ## Requirements
 - Analyze the spending and income patterns.
 - Project the balance for the end of each future month.
+- The 'date' field MUST be in 'YYYY-MM-DD' format (e.g., 2025-12-31).
 - Output ONLY valid JSON matching the specified structure.
 - Do not include any markdown formatting or explanation.
 
